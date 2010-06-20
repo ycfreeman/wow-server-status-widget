@@ -30,6 +30,14 @@ The badge script is not my work, I just make it easy to drag and drop in wordpre
 It should be able to run properly on many servers, but if there is a problem
 please visit http://53x11.com/blog/2005/04/21/WoW-Server-Status-41.10 and look for solutions there.
 
+= It says "service unavailable" or something, what's wrong? =
+Make sure you check the realm name and region, it won't work if you've typed it wrong. 
+If official realm status page: http://www.worldofwarcraft.com/realmstatus/compat.html is working fine, this badge should be working fine, in some rare cases like when they are upgrading server hardware or something, the realm page just breaks and so the badge will also break.
+
+= It doesn't reflect the actual realm status correctly, what's wrong? =
+See above. Also, update timer of this badge is set to 10 minutes, so it may not reflect immediately if the server status just changed within 10 minutes.
+
+
 == Screenshots ==
 1. Here is how it looks
 
