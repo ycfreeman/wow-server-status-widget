@@ -27,7 +27,7 @@ If you managed to find bugs or want to correct some of my codes, please don't he
 
 == Frequently Asked Questions ==
 The badge script is not my work, I just make it easy to drag and drop in wordpress.
-It should be able to run properly on many servers, but if there is a problem
+It should be able to run properly on most servers, but if there is a problem
 please visit http://53x11.com/blog/2005/04/21/WoW-Server-Status-41.10 and look for solutions there.
 
 = It says "No Status Source", what's wrong? =
