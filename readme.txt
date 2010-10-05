@@ -41,7 +41,7 @@ See above. Also, update timer of this badge is set to 10 minutes, so it may not 
 
 == Changelog ==
 = 1.0.2 =
-* fixed the quotation realm not showing bug in original wow_ss.php
+* fixed the quotation realm not showing bug in original wow_ss.php, thanks Nullinger!
 
 = 1.0.1 =
 * better plugin path handling, added bug report icon, updated license wordings
