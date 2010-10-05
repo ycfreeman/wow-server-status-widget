@@ -3,7 +3,7 @@
  * Plugin Name: WOW Server Status Widget
  * Plugin URI: http://www.ycfreeman.com/search/label/wow-server-status-widget
  * Description: Add WOW Server Status 4.1 badge to your site by a few clicks.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Freeman Man
  * Author URI: http://www.ycfreeman.com
  */

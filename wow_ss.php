@@ -56,7 +56,7 @@ function wow_ss_global() {
 		if($_GET[$value])
 			$wowss[$value] = trim(stripslashes($_GET[$value]));
 	}
-	$wowss['realm'] = str_replace('é','e',$wowss['realm']);
+	$$wowss['realm'] = str_replace("'","&#039;",$wowss['realm']);
 	
 	$wowss['us_xml'] = 'http://www.worldofwarcraft.com/realmstatus/status.xml';
 	$wowss['eu_xml'] = 'http://www.wow-europe.com/realmstatus/index.xml';

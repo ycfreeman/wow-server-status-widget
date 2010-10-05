@@ -4,7 +4,7 @@ Donate Link: http://www.ycfreeman.com
 Tags: WOW, Warcraft, Guild, World of Warcraft, Recruitment
 Requires at least: 2.8
 Tested up to: 3.0.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clicks.
 
@@ -40,6 +40,9 @@ See above. Also, update timer of this badge is set to 10 minutes, so it may not 
 1. Here is how it looks
 
 == Changelog ==
+= 1.0.2 =
+* fixed the quotation realm not showing bug in original wow_ss.php
+
 = 1.0.1 =
 * better plugin path handling, added bug report icon, updated license wordings
 
