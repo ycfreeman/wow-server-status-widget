@@ -3,8 +3,8 @@ Contributors: ycfreeman
 Donate Link: http://www.ycfreeman.com
 Tags: WOW, Warcraft, Guild, World of Warcraft, Recruitment
 Requires at least: 2.8
-Tested up to: 3.0.1
-Stable tag: 1.0.3
+Tested up to: 3.0.3
+Stable tag: 1.0.4
 
 Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clicks.
 
@@ -12,10 +12,13 @@ Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clic
 This is a simple widget that displays WOW Server Status 4.1 badge, without having to upload the script with ftp and write an img tag to run it.
 
 The original script [can be found here](http://53x11.com/blog/2005/04/21/WoW-Server-Status-41.10), which is not my work 
+1.0.4: since official feed is moved to some mysterious place, this widget is changed to use [Axho's WoW Feeds](http://wowfeeds.wipeitau.com/)... at least for now
 
-Full description on [the blog entry of this plugin](http://www.ycfreeman.com/2010/06/wow-server-status-wordpress-widget-10.html)
+If you managed to find bugs or want to correct some of my codes, please don't hesitate to post on forum:)
 
-If you managed to find bugs or want to correct some of my codes, please don't hesitate to leave a comment :)
+[Demo](http://wssdemo.ycfreeman.com/)
+[Full description on the blog entry of this plugin](http://www.ycfreeman.com/2010/06/wow-server-status-wordpress-widget-10.html)
+[For bugs please go to support forum](http://ycfreeman.com/forum/support-wss)
 
 == Installation ==
 1. Unpack and Upload all files to the `/wp-content/plugins/wow-server-status-widget` directory

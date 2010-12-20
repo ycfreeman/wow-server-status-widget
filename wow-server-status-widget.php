@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: WOW Server Status Widget
- * Plugin URI: http://www.ycfreeman.com/search/label/wow-server-status-widget
+ * Plugin URI: http://www.ycfreeman.com/category/wow-server-status-widget
  * Description: Add WOW Server Status 4.1 badge to your site by a few clicks.
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Freeman Man
  * Author URI: http://www.ycfreeman.com
  */
@@ -27,7 +27,7 @@
  * help and bug report url as well as icons url for easier maintainence
  */
 
-define("WSS_BUG_URL", "http://www.ycfreeman.com/2010/06/wow-server-status-wordpress-widget-10.html");
+define("WSS_BUG_URL", "http://www.ycfreeman.com/forum/support-wss");
 define("YCFREEMAN_BUG_ICON_URL","http://img835.imageshack.us/img835/4069/bugicon.png");
 
 /**
