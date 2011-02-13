@@ -4,7 +4,7 @@ Donate Link: http://www.ycfreeman.com
 Tags: WOW, Warcraft, Guild, World of Warcraft, Recruitment
 Requires at least: 2.8
 Tested up to: 3.0.3
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 
 Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clicks.
 
@@ -43,6 +43,12 @@ See above. Also, update timer of this badge is set to 10 minutes, so it may not 
 1. Here is how it looks
 
 == Changelog ==
+= 1.0.5 =
+* fixed bug of space becomes %20 in the new wow_ss.php, thanks Mike
+
+= 1.0.4 =
+* since official feed is there no more, this widget is changed to use [Axho's WoW Feeds](http://wowfeeds.wipeitau.com/)... at least for now
+
 = 1.0.3 =
 * take 2, fixed the apostrophe realm not showing bug in original wow_ss.php, aparently the original script has 3 places doing the same thing, so I merged them to one, and encode it correctly to ANSI
 it should be fine now if your keyboard is US keyboard, that renders apostrophe as &#039;, sorry for having it not working for so long

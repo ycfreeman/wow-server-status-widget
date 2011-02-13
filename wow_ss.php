@@ -94,7 +94,8 @@ function wow_ss($realm = 0, $display = 0, $region = 0, $update_timer = 0, $data_
     if ($realm)
         $realm_status['realm'] = $realm;
     else
-        $realm_status['realm'] = $wowss['realm'];
+            /*remove the %20 from display*/
+        $realm_status['realm'] = str_replace('%20', ' ', $wowss['realm']);;
 
     ## Overide default values from script call
     foreach ($wowss['get_array'] as $value) {
@@ -138,6 +139,7 @@ function wow_ss($realm = 0, $display = 0, $region = 0, $update_timer = 0, $data_
         ## Parse XML
         if ($xml) {
             $xml = str_replace('é', 'e', $xml);
+            
 
             ## Parse US XML
             /*  if (strtolower($wowss['region']) == 'us') {
@@ -187,6 +189,8 @@ function wow_ss($realm = 0, $display = 0, $region = 0, $update_timer = 0, $data_
     } else
         $realm_status['script_errors'][] = 'Data Path Error.';
 
+
+ 
     if ($wowss['display'] == 'full') {
 
         unset($update);
