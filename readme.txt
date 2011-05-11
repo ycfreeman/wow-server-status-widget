@@ -14,6 +14,8 @@ This is a simple widget that displays WOW Server Status 4.1 badge, without havin
 The original script [can be found here](http://53x11.com/blog/2005/04/21/WoW-Server-Status-41.10), which is not my work 
 1.0.4: since official feed is moved to some mysterious place, this widget is changed to use [Axho's WoW Feeds](http://wowfeeds.wipeitau.com/)... at least for now
 
+** If you find your widget broken after a wordpress core update, please try to re-save your widget settings.
+
 If you managed to find bugs or want to correct some of my codes, please don't hesitate to post on forum:)
 
 [Demo](http://wssdemo.ycfreeman.com/)
