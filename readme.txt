@@ -4,7 +4,7 @@ Donate Link: http://www.ycfreeman.com
 Tags: WOW, Warcraft, Guild, World of Warcraft, Recruitment
 Requires at least: 2.8
 Tested up to: 3.1.3
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 
 Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clicks.
 
@@ -13,7 +13,7 @@ This is a simple widget that displays WOW Server Status 4.1 badge, without havin
 -- realms with non-english names may also work, but not in 'full' mode as the font used doesn't have those characters
 
 The original script [can be found here](http://53x11.com/blog/2005/04/21/WoW-Server-Status-41.10), which is not my work 
-1.0.6: patched to use official JSON feed (finally :p), php 5.2+ recommended (for native json_decode() support), fallback JSON.php for earlier versions is included as well.
+1.0.7: patched to use official JSON feed (finally :p), php 5.2+ recommended (for native json_decode() support), fallback JSON.php for earlier versions is included as well.
 
 ** If you find your widget broken after a wordpress core update, please try to re-save your widget settings.
 
@@ -46,6 +46,9 @@ See above. Also, update timer of this badge is set to 10 minutes, so it may not 
 1. Here is how it looks
 
 == Changelog ==
+= 1.0.7 =
+* blah, uploaded the wrong file
+
 = 1.0.6 =
 * patched to use official JSON feed
 

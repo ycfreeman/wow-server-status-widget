@@ -2,17 +2,18 @@
 
 ##
 ## WoW Server Status
-## Version 4.1	
+## Version 4.1
 ## Copyright 2008 Nick Schaffner
 ## http://53x11.com
 ##
-## patched by Freeman Man to work with unofficial xml feed
+## patched by Freeman Man http://www.ycfreeman.com to work with official JSON feed
 ##
-
-/* 20 dec 2010 - use feed from http://wowfeeds.wipeitau.com/ */
+/* 8 jun 2011 patched to use official JSON feed */
 
 function wow_ss_xml($region = 0, $realm = 0) {
-    return "http://wowfeeds.wipeitau.com/RealmStatus.php?location=" . $region . "&rn=" . $realm . "&output=XML&callback=?";
+    $region = strtolower($region);
+    $realm = str_replace(" ", "%20", $realm);
+    return "http://" . $region . ".battle.net/api/wow/realm/status?realm=" . $realm;
 }
 
 function wow_ss_global() {
@@ -23,7 +24,7 @@ function wow_ss_global() {
      */
 
     $wowss['realm'] = "Lightning's Blade"; // Your full Realm (server) name
-    $wowss['display'] = 'full';    // (full | half | text | none) displays full or half image, text or set to none to return an array
+    $wowss['display'] = 'text';    // (full | half | text | none) displays full or half image, text or set to none to return an array
     $wowss['region'] = 'us';     // (us | eu) set your server location
     $wowss['update_timer'] = 0;     // Minutes between status update refresh
     $wowss['data_path'] = 'wowss';    // Path to your 'wowss' folder (you may need to prepend this with your root path, 'root/public_html' etc)
@@ -54,7 +55,7 @@ function wow_ss_global() {
     ## $wowss['xml_url'] 		= 'http://www.worldofwarcraft.com/realmstatus/status.xml';	// URL to XML status page
     ## $wowss['server_font'] 	= 'silkscreen.ttf'; 	// Font for Server names
     ## $wowss['type_font'] 		= 'silkscreenb.ttf'; 	// Font for all other type
-################################	
+################################
 ################################ PHP Magic Below, Avoid editing if you don't know what you are doing :)
 ################################
 
@@ -63,24 +64,15 @@ function wow_ss_global() {
         if ($_GET[$value])
             $wowss[$value] = trim(stripslashes($_GET[$value]));
     }
-    $wowss['realm'] = str_replace('é', 'e', $wowss['realm']);
-    $wowss['realm'] = str_replace(' ', '%20', $wowss['realm']);
-    /* 20 dec 2010 old feed no longer working, patching with temporary solution */
-    $wowss['us_xml'] = wow_ss_xml("US", $wowss['realm']);
-    $wowss['eu_xml'] = wow_ss_xml("EU", $wowss['realm']);
 
-    $wowss['us_codes'] = array(
-        'type' => array(1 => '(PvE)', 2 => '(PvP)', 3 => '(RP)', 4 => '(rppvp)'),
-        'status' => array(1 => 'up', 2 => 'down'),
-        'population' => array(0 => 'Offline', 1 => 'Low', 2 => 'Medium', 3 => 'High', 4 => 'Max')
+    /* 8 jun 2011 patched to use official bnet feed */
+    $wowss['xml_url'] = wow_ss_xml($wowss['region'], $wowss['realm']);
+
+    $wowss['bnet_codes'] = array(
+        'type' => array('pve' => 'pve', 'pvp' => 'pvp', 'rppve' => 'rp', 'rppvp' => 'rppvp'),
+        'status' => array(false => 'down', true => 'up'),
+        'population' => array('low' => 'low', 'medium' => 'medium', 'high' => 'high', 'n/a' => 'offline')
     );
-
-    $wowss['eu_codes'] = array(
-        'type' => array('pve' => 'pve', 'pvp' => 'pvp', 'rp-pve' => 'rp', 'rp-pvp' => 'rppvp'),
-        'status' => array('realm down' => 'down', 'realm up' => 'up'),
-        'population' => array('recommended' => 'low', 'medium' => 'medium', 'full' => 'high')
-    );
-
     if (substr($wowss['data_path'], -1) != '/')
         $wowss['data_path'] .= '/';
 
@@ -94,7 +86,7 @@ function wow_ss($realm = 0, $display = 0, $region = 0, $update_timer = 0, $data_
     if ($realm)
         $realm_status['realm'] = $realm;
     else
-            /*remove the %20 from display*/
+    /* remove the %20 from display */
         $realm_status['realm'] = str_replace('%20', ' ', $wowss['realm']);;
 
     ## Overide default values from script call
@@ -104,14 +96,13 @@ function wow_ss($realm = 0, $display = 0, $region = 0, $update_timer = 0, $data_
     }
 
     $realm_status['script_errors'] = array();
-    if (strtolower($wowss['region']) == 'us')
-        $realm_status['language'] = 'us';
-
+    //if (strtolower($wowss['region']) == 'us')
+    //$realm_status['language'] = 'us';
     ## Verify data path
     if (is_dir($wowss['data_path'])) {
 
-        if (!$wowss['xml_url'])
-            $wowss['xml_url'] = $wowss[strtolower($wowss['region']) . '_xml'];
+        //  if (!$wowss['xml_url'])
+        //     $wowss['xml_url'] = $wowss[strtolower($wowss['region']) . '_xml'];
         $xml_file = 'wowss-' . wow_ss_sfn($wowss['region']) . '-' . substr(md5($wowss['xml']), 0, 16) . '.xml';
         ## Check if we need to update XML cache
         clearstatcache();
@@ -124,6 +115,8 @@ function wow_ss($realm = 0, $display = 0, $region = 0, $update_timer = 0, $data_
 
         ## Fetch XML
         if ($update) {
+
+
             $data = @file_get_contents($wowss['xml_url']);
 
             if (strlen($data) > 0) {
@@ -136,53 +129,52 @@ function wow_ss($realm = 0, $display = 0, $region = 0, $update_timer = 0, $data_
         }
 
         $xml = @strtolower(@file_get_contents($wowss['data_path'] . $xml_file));
-        ## Parse XML
+        ## Parse JSON
+       // var_dump($xml);
         if ($xml) {
-            $xml = str_replace('é', 'e', $xml);
-            
+            /* 8 jun 2011 check if json_decode exists */
+            if (!function_exists('json_decode')) {
 
-            ## Parse US XML
-            /*  if (strtolower($wowss['region']) == 'us') {
-              preg_match('/<realm>"' . strtolower(str_replace("'", '&#039;', $wowss['realm'])) . '" t="([0-9])" s="([0-9])" l="([0-9])"\/>/', $xml, $status_array);
-              ## [1] = type, [2] = status, [3] = population
-              if (count($status_array) == 4) {
-              $realm_status['type'] = $wowss['us_codes']['type'][$status_array[1]];
-              $realm_status['status'] = $wowss['us_codes']['status'][$status_array[2]];
-              $realm_status['population'] = $wowss['us_codes']['population'][$status_array[3]];
-              }
-              } */
-			  
-			  /*super quick patch using unofficial xml feed*/
-            preg_match('/<realmstatus>(.*)<\/realmstatus>/', $xml, $status_array['realmstatus']);
-            preg_match('/<realmtype>(.*)<\/realmtype>/', $xml, $status_array['realmtype']);
-            preg_match('/<realmpop>(.*)<\/realmpop>/', $xml, $status_array['realmpop']);
-            $realm_status['type'] = $status_array['realmtype'][1];
-            $realm_status['status'] = $status_array['realmstatus'][1];
-            $realm_status['population'] = $status_array['realmpop'][1];
+                function json_decode($content, $assoc=false) {
+                    require_once 'JSON.php';
+                    if ($assoc) {
+                        $json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+                    } else {
+                        $json = new Services_JSON;
+                    }
+                    return $json->decode($content);
+                }
 
-            ## Parse EU XML
-            /* if (strtolower($wowss['region']) == 'eu') {
-              preg_match('/<title>\s*' . strtolower($wowss['realm']) . '\s*<\/title>.*<\/item>/msU', $xml, $match);
-              preg_match('/domain="population">(.*)</', $match[0], $status_array);
-              if (!$status_array[1])
-              $realm_status['population'] = 'medium';
-              else
-              $realm_status['population'] = $wowss['eu_codes']['population'][$status_array[1]];
+            }
 
-              preg_match('/domain="status">(.*)<.*domain="language">(.*)<.*domain="type">(.*)<.*domain="queue">(.*)</msU', $match[0], $status_array);
-              $realm_status['status'] = $wowss['eu_codes']['status'][$status_array[1]];
-              $realm_status['language'] = $status_array[2];
-              $realm_status['type'] = $wowss['eu_codes']['type'][$status_array[3]];
-              if ($status_array[4] != 'false')
-              $realm_status['population'] = 'max';
-              } */
-            if (!$realm_status['status'])
+            if (!function_exists('json_encode')) {
+
+                function json_encode($content) {
+                    require_once 'JSON.php';
+                    $json = new Services_JSON;
+                    return $json->encode($content);
+                }
+
+            }
+           
+            /* 8 jun 2011 official API is json now */
+            $status_array = json_decode($xml, true);
+
+            //var_dump($status_array);
+            $realm_status['valid'] = $status_array['realms'][0]['name'];
+            $realm_status['type'] = $wowss['bnet_codes']['type'][$status_array['realms'][0]['type']];
+            $realm_status['status'] = $wowss['bnet_codes']['status'][$status_array['realms'][0]['status']];
+            $realm_status['population'] = $wowss['bnet_codes']['population'][$status_array['realms'][0]['population']];
+            $realm_status['region'] = $wowss['region'];
+
+           
+            if (!$realm_status['valid'])
                 $realm_status['status'] = 'error';
             if (!$realm_status['population'])
                 $realm_status['population'] = 'error';
             if (!$realm_status['type'])
                 $realm_status['type'] = 'error';
-            if ($realm_status['status'] == 'down')
+            if (!$realm_status['status'])
                 $realm_status['population'] = 'offline';
         } else
             $realm_status['script_errors'][] = 'Unable to access XML file.';
@@ -190,7 +182,7 @@ function wow_ss($realm = 0, $display = 0, $region = 0, $update_timer = 0, $data_
         $realm_status['script_errors'][] = 'Data Path Error.';
 
 
- 
+
     if ($wowss['display'] == 'full') {
 
         unset($update);
@@ -204,10 +196,9 @@ function wow_ss($realm = 0, $display = 0, $region = 0, $update_timer = 0, $data_
 
         if ($update) {
             ## Write image
-            if ($wowss['show_language'] == 'yes')
-                $wowss[$realm_status['type']] .= ' ' . trim(strtoupper($realm_status['language']));
-            if (strtolower($wowss['region']) == 'eu' and !$realm_status['show_language'])
-                $wowss[$realm_status['type']] .= ' ' . trim(strtoupper($realm_status['language']));
+
+            $wowss[$realm_status['type']] .= ' ' . trim(strtoupper($realm_status['region']));
+         
             wow_ss_image($realm_status, $wowss);
         }
 
