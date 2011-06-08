@@ -3,8 +3,8 @@ Contributors: ycfreeman
 Donate Link: http://www.ycfreeman.com
 Tags: WOW, Warcraft, Guild, World of Warcraft, Recruitment
 Requires at least: 2.8
-Tested up to: 3.1
-Stable tag: 1.0.5
+Tested up to: 3.1.3
+Stable tag: 1.0.6
 
 Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clicks.
 
@@ -12,7 +12,7 @@ Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clic
 This is a simple widget that displays WOW Server Status 4.1 badge, without having to upload the script with ftp and write an img tag to run it.
 
 The original script [can be found here](http://53x11.com/blog/2005/04/21/WoW-Server-Status-41.10), which is not my work 
-1.0.4: since official feed is moved to some mysterious place, this widget is changed to use [Axho's WoW Feeds](http://wowfeeds.wipeitau.com/)... at least for now
+1.0.6: patched to use official JSON feed (finally :p), php 5.2+ recommended (for native json_decode() support), fallback JSON.php for earlier versions is included as well.
 
 ** If you find your widget broken after a wordpress core update, please try to re-save your widget settings.
 
@@ -35,7 +35,7 @@ please visit [the author's site](http://53x11.com/blog/2005/04/21/WoW-Server-Sta
 
 = It says "No Status Source", what's wrong? =
 Make sure you check the realm name and region carefully, it won't work if you've typed it wrong. 
-If [official realm status page](http://www.worldofwarcraft.com/realmstatus/compat.html) is working fine, this badge should be working fine, in some rare cases like when Blizzard is upgrading their server hardware or something, the realm page just breaks and this badge will also break.
+If [official realm status page for US](http://us.battle.net/wow/en/status) or [official realm status page for EU](http://eu.battle.net/wow/en/status) is working fine, this badge should be working fine, in some rare cases like when Blizzard is upgrading their server hardware or something, the realm page just breaks and this badge will also break.
 
 = It doesn't reflect the actual realm status correctly, what's wrong? =
 See above. Also, update timer of this badge is set to 10 minutes, so it may not reflect immediately if the server status has just changed within 10 minutes.
@@ -45,6 +45,9 @@ See above. Also, update timer of this badge is set to 10 minutes, so it may not 
 1. Here is how it looks
 
 == Changelog ==
+= 1.0.6 =
+* patched to use official JSON feed
+
 = 1.0.5 =
 * fixed bug of space becomes %20 in the new wow_ss.php, thanks Mike
 
