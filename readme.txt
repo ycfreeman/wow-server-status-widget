@@ -10,6 +10,7 @@ Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clic
 
 == Description ==
 This is a simple widget that displays WOW Server Status 4.1 badge, without having to upload the script with ftp and write an img tag to run it.
+-- realms with non-english names may also work, but not in 'full' mode as the font used doesn't have those characters
 
 The original script [can be found here](http://53x11.com/blog/2005/04/21/WoW-Server-Status-41.10), which is not my work 
 1.0.6: patched to use official JSON feed (finally :p), php 5.2+ recommended (for native json_decode() support), fallback JSON.php for earlier versions is included as well.
