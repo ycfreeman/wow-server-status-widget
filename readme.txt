@@ -1,7 +1,7 @@
 === WOW Server Status Widget ===
 Contributors: ycfreeman
 Donate Link: http://www.ycfreeman.com
-Tags: WOW, Warcraft, Guild, World of Warcraft, Recruitment
+Tags: WOW, Warcraft, World of Warcraft, Realm, Server, Status, widget, wow
 Requires at least: 2.8
 Tested up to: 3.1.3
 Stable tag: 1.0.7
