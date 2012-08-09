@@ -3,7 +3,7 @@ Contributors: ycfreeman
 Donate Link: http://www.ycfreeman.com
 Tags: WOW, Warcraft, World of Warcraft, Realm, Server, Status, widget, wow
 Requires at least: 2.8
-Tested up to: 3.1.3
+Tested up to: 3.4.1
 Stable tag: 1.0.7
 
 Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clicks.
@@ -21,7 +21,8 @@ If you managed to find bugs or want to correct some of my codes, please don't he
 
 [Demo](http://wssdemo.ycfreeman.com/)
 [Full description on the blog entry of this plugin](http://www.ycfreeman.com/2010/06/wow-server-status-wordpress-widget-10.html)
-[For bugs please go to support forum](http://ycfreeman.com/forum/support-wss)
+[Issue Tracker on github](https://github.com/ycfreeman/wow-server-status-widget/issues)
+[Codebase](https://github.com/ycfreeman/wow-server-status-widget)
 
 == Installation ==
 1. Unpack and Upload all files to the `/wp-content/plugins/wow-server-status-widget` directory
@@ -47,7 +48,7 @@ See above. Also, update timer of this badge is set to 10 minutes, so it may not 
 
 == Changelog ==
 = 1.0.7 =
-* blah, uploaded the wrong file
+* fixed a mis-uploaded file
 
 = 1.0.6 =
 * patched to use official JSON feed
