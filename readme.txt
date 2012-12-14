@@ -3,7 +3,7 @@ Contributors: ycfreeman
 Donate Link: http://www.ycfreeman.com
 Tags: WOW, Warcraft, World of Warcraft, Realm, Server, Status, widget, wow
 Requires at least: 2.8
-Tested up to: 3.4.1
+Tested up to: 3.5.x
 Stable tag: 1.0.7
 
 Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clicks.
