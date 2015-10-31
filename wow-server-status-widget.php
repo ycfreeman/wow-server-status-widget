@@ -27,28 +27,21 @@
  * help and bug report url as well as icons url for easier maintainence
  */
 
-define("WSS_BUG_URL", "http://www.ycfreeman.com/forum/support-wss");
-define("YCFREEMAN_BUG_ICON_URL","http://img835.imageshack.us/img835/4069/bugicon.png");
-
-/**
- * bulletproof plugin path handling
- * @since 1.0.1
- */
-define("WSS_PATH", WP_PLUGIN_URL . '/' . str_replace(basename(__FILE__), "", plugin_basename(__FILE__)));
+define( "WSS_BUG_URL", "http://www.ycfreeman.com/forum/support-wss" );
 
 /**
  * Add function to widgets_init that'll load our widget.
  * @since 1.0
  */
-add_action('widgets_init', 'wow_ss_load_widgets');
+add_action( 'widgets_init', 'wow_ss_load_widgets' );
 
 /**
  * Register our widget.
- * 
+ *
  * @since 1.0
  */
 function wow_ss_load_widgets() {
-    register_widget('Wow_SS_Widget');
+	register_widget( 'Wow_SS_Widget' );
 }
 
 /**
@@ -60,223 +53,235 @@ function wow_ss_load_widgets() {
  */
 class Wow_SS_Widget extends WP_Widget {
 
-    /**
-     * Widget setup.
-     */
-    function Wow_SS_Widget() {
-        /* Widget settings. */
-        $widget_ops = array('classname' => 'wow-ss-widget', 'description' => __('Displays specific WOW realm status.', 'wow-ss-widget'));
+	/**
+	 * Widget setup.
+	 */
+	function Wow_SS_Widget() {
+		/* Widget settings. */
+		$widget_ops = array(
+			'classname'   => 'wow-ss-widget',
+			'description' => __( 'Displays specific WOW realm status.', 'wow-ss-widget' )
+		);
 
-        /* Widget control settings. */
-        $control_ops = array('width' => 300, 'height' => 600, 'id_base' => 'wow-ss-widget');
+		/* Widget control settings. */
+		$control_ops = array( 'width' => 300, 'height' => 600, 'id_base' => 'wow-ss-widget' );
 
-        /* Create the widget. */
-        $this->WP_Widget('wow-ss-widget', __('WOW Server Status Widget', 'wow-ss-widget'), $widget_ops, $control_ops);
-    }
+		/* Create the widget. */
+		$this->WP_Widget( 'wow-ss-widget', __( 'WOW Server Status Widget', 'wow-ss-widget' ), $widget_ops, $control_ops );
+	}
 
-    /**
-     * How to display the widget on the screen.
-     */
-    function widget($args, $instance) {
+	/**
+	 * How to display the widget on the screen.
+	 */
+	function widget( $args, $instance ) {
 
-        extract($args);
+		extract( $args );
 
-        /* Our variables from the widget settings. */
-        $title = apply_filters('widget_title', $instance['title']);
-
-
-
-        /* Before widget (defined by themes). */
-        echo $before_widget;
-
-        /* Display the widget title if one was input (before and after defined by themes). */
-        if ($title) {
-            echo $before_title . $title . $after_title;
-        }
+		/* Our variables from the widget settings. */
+		$title = apply_filters( 'widget_title', $instance['title'] );
 
 
+		/* Before widget (defined by themes). */
+		echo $before_widget;
 
-        /**
-         * Frontend Start
-         */
-?>
+		/* Display the widget title if one was input (before and after defined by themes). */
+		if ( $title ) {
+			echo $before_title . $title . $after_title;
+		}
 
-        <div style="text-align: <?php echo $instance['align'] ?>">
-            <img alt="<?php echo $instance['realm']; ?> realm status"
-                 src="<?php
-        echo
-        WSS_PATH .
-        'wow_ss.php?' .
-        'realm=' . $instance['realm'] .
-        '&region=' . $instance['region'] .
-        '&display=' . $instance['display'] .
-        '&img_type=' . $instance['img_type']; ?>" />
-</div>
 
-<?php
-        /**
-         *  Frontend End
-         */
-        /* After widget (defined by themes). */
-        echo $after_widget;
-    }
+		/**
+		 * Frontend Start
+		 */
+		?>
 
-    /**
-     * Update the widget settings.
-     */
-    function update($new_instance, $old_instance) {
+		<div style="text-align: <?php echo $instance['align'] ?>">
+			<img alt="<?php echo $instance['realm']; ?> realm status"
+			     src="<?php
+			     echo
+			     plugins_url( 'lib/wow_ss.php?' .
+			                  'realm=' . $instance['realm'] .
+			                  '&region=' . $instance['region'] .
+			                  '&display=' . $instance['display'] .
+			                  '&img_type=' . $instance['img_type'], __FILE__ ); ?>"/>
+		</div>
 
-        $instance = $old_instance;
+		<?php
+		/**
+		 *  Frontend End
+		 */
+		/* After widget (defined by themes). */
+		echo $after_widget;
+	}
 
-        /* Strip tags for title and title_url to remove HTML (important for text inputs). */
-        $instance['title'] = strip_tags($new_instance['title']);
+	/**
+	 * Update the widget settings.
+	 */
+	function update( $new_instance, $old_instance ) {
 
-        //updating $instance
-        $instance['realm'] = strip_tags($new_instance['realm']);
-        $instance['region'] = strip_tags($new_instance['region']);
+		$instance = $old_instance;
 
-        $instance['align'] = strip_tags($new_instance['align']);
-        $instance['display'] = strip_tags($new_instance['display']);
-        $instance['img_type'] = strip_tags($new_instance['img_type']);
+		/* Strip tags for title and title_url to remove HTML (important for text inputs). */
+		$instance['title'] = strip_tags( $new_instance['title'] );
 
-        return $instance;
-    }
+		//updating $instance
+		$instance['realm']  = strip_tags( $new_instance['realm'] );
+		$instance['region'] = strip_tags( $new_instance['region'] );
 
-    /**
-     * Displays the widget settings controls on the widget panel.
-     * Make use of the get_field_id() and get_field_name() function
-     * when creating your form elements. This handles the confusing stuff.
-     */
-    function form($instance) {
+		$instance['align']    = strip_tags( $new_instance['align'] );
+		$instance['display']  = strip_tags( $new_instance['display'] );
+		$instance['img_type'] = strip_tags( $new_instance['img_type'] );
 
-        //set defaults
-        $defaults = array('realm' => 'Thaurissan',
-            'region' => 'us',
-            'display' => 'full',
-            'img_type' => 'png',
-            'align' => 'center'
-        );
-        $instance = wp_parse_args((array) $instance, $defaults);
-?>
-        <div style="float:right;">
-            <a href="<?php echo WSS_BUG_URL; ?>" target="_blank" >
-                <img src="<?php echo YCFREEMAN_BUG_ICON_URL; ?>" title="report bugs" alt="report bugs"/>
-            </a>
-        </div>
-        <!-- Widget Title: Text Input -->
-        <p>
-            <label for="<?php echo $this->get_field_id('title'); ?>">Title(optional):</label>
-            <input type="text"
-                   id="<?php echo $this->get_field_id('title'); ?>"
-                   name="<?php echo $this->get_field_name('title'); ?>"
-                   value="<?php echo $instance['title']; ?>"
-                   style="width:100%;" />
-        </p>
-        <!-- Realm and Region -->
+		return $instance;
+	}
 
-        <p>
-            <label for="<?php echo $this->get_field_id('realm'); ?>"
-                   >Realm:</label>
-            <br />
-            <input type="text"
-                   id="<?php echo $this->get_field_id('realm'); ?>"
-                   name="<?php echo $this->get_field_name('realm'); ?>"
-                   value="<?php echo $instance['realm']; ?>"
-                   style="width:70%;" />
+	/**
+	 * Displays the widget settings controls on the widget panel.
+	 * Make use of the get_field_id() and get_field_name() function
+	 * when creating your form elements. This handles the confusing stuff.
+	 */
+	function form( $instance ) {
 
-            <select id="<?php echo $this->get_field_id('region'); ?>"
-                    name="<?php echo $this->get_field_name('region'); ?>"
-                    style="width:25%;"
-                    >
-                <option <?php if ('us' == $instance['region'])
-            echo 'selected="selected"'; ?>
-            value="us">
-            US
-        </option>
-        <option <?php if ('eu' == $instance['region'])
-            echo 'selected="selected"'; ?>
-            value="eu">
-            EU
-        </option>
-    </select>
-</p>
-<!-- wow_ss.php variables -->
-<table style="width:100%;">
-    <tbody>
-        <tr>
-            <td style="width:50%;">
-                Align
-            </td>
-            <td>
-                <select id="<?php echo $this->get_field_id('align'); ?>"
-                        name="<?php echo $this->get_field_name('align'); ?>"
+		//set defaults
+		$defaults = array(
+			'realm'    => 'Thaurissan',
+			'region'   => 'us',
+			'display'  => 'full',
+			'img_type' => 'png',
+			'align'    => 'center'
+		);
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		?>
+		<div style="float:right;">
+			<a href="<?php echo WSS_BUG_URL; ?>" target="_blank">
+				<img src="<?php echo plugins_url( "images/ic_bug_report.svg", __FILE__ ); ?>" title="report bugs"
+				     alt="report bugs"/>
+			</a>
+		</div>
+		<!-- Widget Title: Text Input -->
+		<p>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>">Title(optional):</label>
+			<input type="text"
+			       id="<?php echo $this->get_field_id( 'title' ); ?>"
+			       name="<?php echo $this->get_field_name( 'title' ); ?>"
+			       value="<?php echo $instance['title']; ?>"
+			       style="width:100%;"/>
+		</p>
+		<!-- Realm and Region -->
 
-                        >
-                    <option <?php if ('left' == $instance['align'])
-            echo 'selected="selected"'; ?>
-                        value="left">
-                        Left
-                    </option>
-                    <option <?php if ('center' == $instance['align'])
-                        echo 'selected="selected"'; ?>
-                        value="center">
-                        Center
-                    </option>
-                    <option <?php if ('right' == $instance['display'])
-                        echo 'selected="selected"'; ?>
-                        value="right">
-                        Right
-                    </option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Display
-            </td>
-            <td>
-                <select id="<?php echo $this->get_field_id('display'); ?>"
-                        name="<?php echo $this->get_field_name('display'); ?>"
-                        >
-                    <option <?php if ('full' == $instance['display'])
-                        echo 'selected="selected"'; ?>
-                        value="full">
-                        Full Badge
-                    </option>
-                    <option <?php if ('half' == $instance['display'])
-                        echo 'selected="selected"'; ?>
-                        value="half">
-                        Half Badge
-                    </option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Image Type
-            </td>
-            <td>
-                <select id="<?php echo $this->get_field_id('img_type'); ?>"
-                        name="<?php echo $this->get_field_name('img_type'); ?>"
-                        >
-                    <option <?php if ('png' == $instance['img_type'])
-                        echo 'selected="selected"'; ?>
-                        value="png">
-                        PNG
-                    </option>
-                    <option <?php if ('gif' == $instance['img_type'])
-                        echo 'selected="selected"'; ?>
-                        value="gif">
-                        GIF
-                    </option>
-                </select>
-            </td>
-        </tr>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'realm' ); ?>"
+			>Realm:</label>
+			<br/>
+			<input type="text"
+			       id="<?php echo $this->get_field_id( 'realm' ); ?>"
+			       name="<?php echo $this->get_field_name( 'realm' ); ?>"
+			       value="<?php echo $instance['realm']; ?>"
+			       style="width:70%;"/>
 
-    </tbody>
-</table>
-<?php
-                }
+			<select id="<?php echo $this->get_field_id( 'region' ); ?>"
+			        name="<?php echo $this->get_field_name( 'region' ); ?>"
+			        style="width:25%;"
+			>
+				<option <?php if ( 'us' == $instance['region'] ) {
+					echo 'selected="selected"';
+				} ?>
+					value="us">
+					US
+				</option>
+				<option <?php if ( 'eu' == $instance['region'] ) {
+					echo 'selected="selected"';
+				} ?>
+					value="eu">
+					EU
+				</option>
+			</select>
+		</p>
+		<!-- wow_ss.php variables -->
+		<table style="width:100%;">
+			<tbody>
+			<tr>
+				<td style="width:50%;">
+					Align
+				</td>
+				<td>
+					<select id="<?php echo $this->get_field_id( 'align' ); ?>"
+					        name="<?php echo $this->get_field_name( 'align' ); ?>"
 
-            }
+					>
+						<option <?php if ( 'left' == $instance['align'] ) {
+							echo 'selected="selected"';
+						} ?>
+							value="left">
+							Left
+						</option>
+						<option <?php if ( 'center' == $instance['align'] ) {
+							echo 'selected="selected"';
+						} ?>
+							value="center">
+							Center
+						</option>
+						<option <?php if ( 'right' == $instance['display'] ) {
+							echo 'selected="selected"';
+						} ?>
+							value="right">
+							Right
+						</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Display
+				</td>
+				<td>
+					<select id="<?php echo $this->get_field_id( 'display' ); ?>"
+					        name="<?php echo $this->get_field_name( 'display' ); ?>"
+					>
+						<option <?php if ( 'full' == $instance['display'] ) {
+							echo 'selected="selected"';
+						} ?>
+							value="full">
+							Full Badge
+						</option>
+						<option <?php if ( 'half' == $instance['display'] ) {
+							echo 'selected="selected"';
+						} ?>
+							value="half">
+							Half Badge
+						</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Image Type
+				</td>
+				<td>
+					<select id="<?php echo $this->get_field_id( 'img_type' ); ?>"
+					        name="<?php echo $this->get_field_name( 'img_type' ); ?>"
+					>
+						<option <?php if ( 'png' == $instance['img_type'] ) {
+							echo 'selected="selected"';
+						} ?>
+							value="png">
+							PNG
+						</option>
+						<option <?php if ( 'gif' == $instance['img_type'] ) {
+							echo 'selected="selected"';
+						} ?>
+							value="gif">
+							GIF
+						</option>
+					</select>
+				</td>
+			</tr>
+
+			</tbody>
+		</table>
+		<?php
+	}
+
+}
+
 ?>
