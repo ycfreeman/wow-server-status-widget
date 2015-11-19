@@ -12,7 +12,7 @@
  * help and bug report url as well as icons url for easier maintainence
  */
 
-define( "WSS_BUG_URL", "http://www.ycfreeman.com/forum/support-wss" );
+define( "WSS_BUG_URL", "https://github.com/ycfreeman/wow-server-status-widget/issues" );
 
 /**
  * Add function to widgets_init that'll load our widget.
