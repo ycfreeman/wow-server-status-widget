@@ -19,10 +19,11 @@ The original script [can be found here](http://53x11.com/blog/2005/04/21/WoW-Ser
 
 If you managed to find bugs or want to correct some of my codes, please don't hesitate to post on forum:)
 
-[Demo](http://wssdemo.ycfreeman.com/)
-[Full description on the blog entry of this plugin](http://www.ycfreeman.com/2010/06/wow-server-status-wordpress-widget-10.html)
-[Issue Tracker on github](https://github.com/ycfreeman/wow-server-status-widget/issues)
-[Codebase](https://github.com/ycfreeman/wow-server-status-widget)
+* [Plugin] (https://wordpress.org/plugins/wow-server-status-widget/)
+* [Demo](http://wssdemo.ycfreeman.com/)
+* [Full Plugin Description](http://www.ycfreeman.com/2010/06/wow-server-status-wordpress-widget-10.html)
+* [Issue Tracker](https://github.com/ycfreeman/wow-server-status-widget/issues)
+* [Codebase](https://github.com/ycfreeman/wow-server-status-widget)
 
 == Installation ==
 1. Unpack and Upload all files to the `/wp-content/plugins/wow-server-status-widget` directory
@@ -47,6 +48,7 @@ See above. Also, update timer of this badge is set to 10 minutes, so it may not 
 1. Here is how it looks
 
 == Changelog ==
+
 = 1.0.8 =
 * update bug report icon and url
 
