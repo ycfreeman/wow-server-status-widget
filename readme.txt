@@ -22,7 +22,7 @@ If you managed to find bugs or want to correct some of my codes, please don't he
 
 * [Plugin Page](https://wordpress.org/plugins/wow-server-status-widget/)
 * [Demo](http://wssdemo.ycfreeman.com/)
-* [Full Plugin Description](http://www.ycfreeman.com/2010/06/wow-server-status-wordpress-widget-10.html)
+* [Full Plugin Description](http://ycfreeman.com/blog/2010/06/wow-server-status-wordpress-widget-10/)
 * [Issue Tracker](https://github.com/ycfreeman/wow-server-status-widget/issues)
 * [Source Code](https://github.com/ycfreeman/wow-server-status-widget)
 
