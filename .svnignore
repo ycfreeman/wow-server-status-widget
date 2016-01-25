@@ -2,3 +2,4 @@ bin/
 tests/
 phpunit.xml
 .travis.yml
+.idea/
