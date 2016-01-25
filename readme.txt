@@ -9,6 +9,7 @@ Stable tag: 1.0.12
 Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clicks.
 
 == Description ==
+
 This is a simple widget that displays WOW Server Status 4.1 badge, without having to upload the script with ftp and write an img tag to run it.
 -- realms with non-english names may also work, but not in 'full' mode as the font used doesn't have those characters
 
