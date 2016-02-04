@@ -1,6 +1,6 @@
 === WOW Server Status Widget ===
 Contributors: ycfreeman
-Donate Link: https://www.paypal.me/ycfreeman
+Donate Link: http://ycfreeman.com
 Tags: WOW, Warcraft, World of Warcraft, Realm, Server, Status, widget, wow
 Requires at least: 2.8
 Tested up to: 4.5
