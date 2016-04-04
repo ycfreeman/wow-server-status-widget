@@ -3,11 +3,11 @@
  * Plugin Name: WOW Server Status Widget
  * Plugin URI: http://www.ycfreeman.com/category/wow-server-status-widget
  * Description: Add WOW Server Status 4.1 badge to your site by a few clicks.
- * Version: 1.0.12
+ * Version: 1.0.13
  * Author: Freeman Man
  * Author URI: http://www.ycfreeman.com
  */
-
+define("PLUGIN_OPTION_KEY", 'wow_ss_widget');
 /**
  * help and bug report url as well as icons url for easier maintainence
  */
@@ -27,6 +27,43 @@ add_action( 'widgets_init', 'wow_ss_load_widgets' );
  */
 function wow_ss_load_widgets() {
 	register_widget( 'Wow_SS_Widget' );
+}
+
+/**
+ * uninstall hook
+ */
+if (!function_exists('wow_ss_widget_uninstall')) {
+
+	function wow_ss_widget_uninstall()
+	{
+		delete_option(PLUGIN_OPTION_KEY);
+	}
+
+}
+
+$wss_options = get_option(PLUGIN_OPTION_KEY);
+$wss_api_key = $wss_options['api_key'];
+$settings_link = '<a href="options-general.php?page=wow_ss_options">' . __('Settings') . '</a>';
+$settings_link_displayed = false;
+
+/**
+ * settings link in plugins page
+ */
+add_filter( 'plugin_action_links', 'wow_ss_add_action_links', 10, 5 );
+
+function wow_ss_add_action_links ( $actions, $plugin_file ) {
+	global $settings_link;
+
+	static $plugin;
+
+	if (!isset($plugin))
+		$plugin = plugin_basename(__FILE__);
+	if ($plugin == $plugin_file) {
+		$settings = array('settings' => $settings_link);
+		$actions = array_merge($settings, $actions);
+	}
+
+	return $actions;
 }
 
 /**
@@ -60,6 +97,8 @@ class Wow_SS_Widget extends WP_Widget {
 	 */
 	function widget( $args, $instance ) {
 
+		global $wss_api_key;
+
 		extract( $args );
 
 		/* Our variables from the widget settings. */
@@ -78,17 +117,22 @@ class Wow_SS_Widget extends WP_Widget {
 		/**
 		 * Frontend Start
 		 */
+
 		?>
+
 
 		<div style="text-align: <?php echo $instance['align'] ?>">
 			<img alt="<?php echo $instance['realm']; ?> realm status"
 			     src="<?php
 			     echo
 			     plugins_url( 'lib/wow_ss.php?' .
-			                  'realm=' . $instance['realm'] .
-			                  '&region=' . $instance['region'] .
-			                  '&display=' . $instance['display'] .
-			                  '&img_type=' . $instance['img_type'], __FILE__ ); ?>"/>
+					 'realm=' . $instance['realm'] .
+					 '&region=' . $instance['region'] .
+					 '&display=' . $instance['display'] .
+					 '&img_type=' . $instance['img_type'] .
+					 '&update_timer=5'.
+					 '&apikey=' . urlencode($wss_api_key)
+					 , __FILE__ ); ?>"/>
 		</div>
 
 		<?php
@@ -127,6 +171,16 @@ class Wow_SS_Widget extends WP_Widget {
 	 */
 	function form( $instance ) {
 
+
+		global $settings_link;
+		global $settings_link_displayed;
+		global $wss_api_key;
+
+		if ((!isset($wss_api_key) || empty($wss_api_key)) && !$settings_link_displayed): ?>
+			<div id="messages" class="error">Battle.net API Key is not set, please set it up in <?php echo $settings_link; ?>.</div>
+		<?php $settings_link_displayed = true;
+		endif;
+
 		//set defaults
 		$defaults = array(
 			'realm'    => 'Thaurissan',
@@ -136,7 +190,10 @@ class Wow_SS_Widget extends WP_Widget {
 			'align'    => 'center'
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
+
 		?>
+
+
 		<div style="float:right;">
 			<a href="<?php echo WSS_BUG_URL; ?>" target="_blank">
 				<img src="<?php echo plugins_url( "images/ic_bug_report.svg", __FILE__ ); ?>" title="report bugs"
@@ -269,4 +326,6 @@ class Wow_SS_Widget extends WP_Widget {
 
 }
 
-?>
+if (is_admin()) {
+	include 'inc/admin.php';
+}

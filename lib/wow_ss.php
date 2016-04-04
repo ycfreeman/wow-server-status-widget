@@ -9,12 +9,13 @@
 ## patched by Freeman Man http://www.ycfreeman.com to work with official JSON feed
 ##
 /* 8 jun 2011 patched to use official JSON feed */
+/* 5 apr 2016 patched to support battle.net api key*/
 
-function wow_ss_xml( $region = 0, $realm = 0 ) {
+function wow_ss_xml( $region = 0, $realm = 0 , $apikey = '') {
 	$region = strtolower( $region );
 	$realm  = str_replace( " ", "%20", $realm );
 
-	return "http://" . $region . ".battle.net/api/wow/realm/status?realm=" . $realm;
+	return "https://" . $region . ".api.battle.net/wow/realm/status?locale=en_US&realm={$realm}&apikey={$apikey}";
 }
 
 function wow_ss_global() {
@@ -27,10 +28,10 @@ function wow_ss_global() {
 	$wowss['realm']        = "Lightning's Blade"; // Your full Realm (server) name
 	$wowss['display']      = 'text';    // (full | half | text | none) displays full or half image, text or set to none to return an array
 	$wowss['region']       = 'us';     // (us | eu) set your server location
-	$wowss['update_timer'] = 0;     // Minutes between status update refresh
+	$wowss['update_timer'] = 10;     // Minutes between status update refresh
 	$wowss['data_path']    = 'wowss';    // Path to your 'wowss' folder (you may need to prepend this with your root path, 'root/public_html' etc)
 	$wowss['image_type']   = 'png';    // (png | gif) image type output
-
+	$wowss['apikey']       = '';
 	/*
 	  ##		These are the default messages outputed by the text version of the script.
 	 */
@@ -60,7 +61,7 @@ function wow_ss_global() {
 ################################ PHP Magic Below, Avoid editing if you don't know what you are doing :)
 ################################
 
-	$wowss['get_array'] = array( 'realm', 'update_timer', 'display', 'region', 'data_path', 'image_type' );
+	$wowss['get_array'] = array( 'realm', 'update_timer', 'display', 'region', 'data_path', 'image_type', 'apikey' );
 	foreach ( $wowss['get_array'] as $value ) {
 		if ( $_GET[ $value ] ) {
 			$wowss[ $value ] = trim( stripslashes( $_GET[ $value ] ) );
@@ -68,7 +69,7 @@ function wow_ss_global() {
 	}
 
 	/* 8 jun 2011 patched to use official bnet feed */
-	$wowss['xml_url'] = wow_ss_xml( $wowss['region'], $wowss['realm'] );
+	$wowss['xml_url'] = wow_ss_xml( $wowss['region'], $wowss['realm'], $wowss['apikey'] );
 
 	$wowss['bnet_codes'] = array(
 		'type'       => array( 'pve' => 'pve', 'pvp' => 'pvp', 'rppve' => 'rp', 'rppvp' => 'rppvp' ),
@@ -84,6 +85,7 @@ function wow_ss_global() {
 
 function wow_ss( $realm = 0, $display = 0, $region = 0, $update_timer = 0, $data_path = 0, $image_type = 0 ) {
 
+	$update = false;
 	$wowss        = wow_ss_global();
 	$realm_status = array();
 	if ( $realm ) {
@@ -107,7 +109,7 @@ function wow_ss( $realm = 0, $display = 0, $region = 0, $update_timer = 0, $data
 
 		//  if (!$wowss['xml_url'])
 		//     $wowss['xml_url'] = $wowss[strtolower($wowss['region']) . '_xml'];
-		$xml_file = 'wowss-' . wow_ss_sfn( $wowss['region'] ) . '-' . substr( md5( $wowss['xml'] ), 0, 16 ) . '.xml';
+		$xml_file = 'wowss-' . wow_ss_sfn( $wowss['region'] ) . '-' . substr( md5( $wowss['xml'] ), 0, 16 ) . '.json';
 		## Check if we need to update XML cache
 		clearstatcache();
 		if ( file_exists( $wowss['data_path'] . $xml_file ) ) {
@@ -120,7 +122,6 @@ function wow_ss( $realm = 0, $display = 0, $region = 0, $update_timer = 0, $data
 
 		## Fetch XML
 		if ( $update ) {
-
 
 			$data = @file_get_contents( $wowss['xml_url'] );
 

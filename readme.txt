@@ -3,8 +3,8 @@ Contributors: ycfreeman
 Donate Link: http://ycfreeman.com
 Tags: WOW, Warcraft, World of Warcraft, Realm, Server, Status, widget, wow
 Requires at least: 2.8
-Tested up to: 4.5
-Stable tag: 1.0.12
+Tested up to: 4.4.1
+Stable tag: 1.0.13
 
 Easily add WOW Server Status 4.1 badge to your wordpress site by just a few clicks.
 
@@ -28,9 +28,10 @@ If you managed to find bugs or want to correct some of my codes, please don't he
 
 == Installation ==
 1. Unpack and Upload all files to the `/wp-content/plugins/wow-server-status-widget` directory
-2. Activate the plugin through the **Plugins** menu in WordPress
-3. Drag **WOW Server Status Widget** to your sidebar
-4. Enter details and done!
+1. Add your Battle.net API key in Settings
+1. Activate the plugin through the **Plugins** menu in WordPress
+1. Drag **WOW Server Status Widget** to your sidebar
+1. Enter details and done!
 
 == Frequently Asked Questions ==
 The badge script is not my work, I just make it easy to drag and drop in wordpress.
@@ -38,17 +39,20 @@ It should be able to run properly on most servers, but if there is a problem
 please visit [the author's site](http://53x11.com/blog/2005/04/21/WoW-Server-Status-41.10) and look for solutions there.
 
 = It says "No Status Source", what's wrong? =
-Make sure you check the realm name and region carefully, it won't work if you've typed it wrong. 
+Make sure you have got a correct Battle.net API key [get one here](https://dev.battle.net/), also check the realm name and region carefully, it won't work if you've typed it wrong.
 If [official realm status page for US](http://us.battle.net/wow/en/status) or [official realm status page for EU](http://eu.battle.net/wow/en/status) is working fine, this badge should be working fine, in some rare cases like when Blizzard is upgrading their server hardware or something, the realm page just breaks and this badge will also break.
 
 = It doesn't reflect the actual realm status correctly, what's wrong? =
-See above. Also, update timer of this badge is set to 10 minutes, so it may not reflect immediately if the server status has just changed within 10 minutes.
+See above. Also, cache time of this badge is set to 5 minutes, so it may not reflect immediately if the server status has just changed within 5 minutes.
 
 
 == Screenshots ==
 1. Here is how it looks
 
 == Changelog ==
+
+= 1.0.13=
+* add widget settings page for API key settings
 
 = 1.0.8 =
 * update bug report icon and url
